@@ -1,3 +1,6 @@
+// Ethernet headers are always 14 bytes	
+#define	ETH_HDR_LEN	14
+
 #define ETH_ADDR_LEN	6
 
 //
