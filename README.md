@@ -1,4 +1,3 @@
-packet-collector
-================
+# packet-collector
 
-A utility for collecting and persisting network packets.
+A utility for collecting and persisting network packets. 
