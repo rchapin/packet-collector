@@ -1,28 +1,30 @@
-# Use the c++ compiler
 CC := g++
+DEBUG := -g
+CFLAGS := -v -c -Wall $(DEBUG)
+LFLAGS := -v -Wall $(DEBUG)
+LDFLAGS := -lpcap
 
 BIN_DIR		:= bin
 BUILD_DIR	:= build
 DIST_DIR	:= dist
-INCLUDE_DIR	:= include
+INC_DIR		:= include
 SRC_DIR		:= src
 TEST_DIR	:= test
 
-# SRC_EXT		:= cpp c
+TARGET		:= $(BIN_DIR)/packetCollector
+OBJS		:= $(BUILD_DIR)/packetCollector.o 
 
+all: $(TARGET)
 
-# Compile with all warnings and debug info for use with gdb
-CFLAGS :=-v -c -Wall -g
+$(TARGET): $(OBJS)
+	$(CC) $(LFLAGS) $(LDFLAGS) -o $(TARGET) $(OBJS)
 
-# Add libpap to the linker
-LDFLAGS=-lpcap
-
-all: ./build/packetCollector.o
-	$(CC) -v $(LDFLAGS) -o ./bin/packetCollector ./build/packetCollector.o
-
-./build/packetCollector.o: ./src/packetCollector.cpp
-	$(CC) $(CFLAGS) -o ./build/packetCollector.o ./src/packetCollector.cpp
+$(BUILD_DIR)/packetCollector.o: $(SRC_DIR)/packetCollector.cpp $(INC_DIR)/packet_structs.h
+	$(CC) $(CFLAGS) -o $(BUILD_DIR)/packetCollector.o $(SRC_DIR)/packetCollector.cpp
+	  
+install:
+	echo "Not yet implemented..." 
 
 clean:
-	rm -rf ./bin/* ./build/*
+	\rm -rf ./bin/* ./build/*
 
