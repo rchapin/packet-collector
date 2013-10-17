@@ -1,14 +1,14 @@
-#include "PcapConfigs.hpp"
+#include "pcap_configs.hpp"
 
 /**
  * Packet capture class utilizing libpcap
  */
-class Pcap {
+class pcap {
 
 private:
 	int x, y;
 
-	PcapConfigs conf;
+	pcap_configs conf;
 
 public:
 	void setValues(int a, int b);

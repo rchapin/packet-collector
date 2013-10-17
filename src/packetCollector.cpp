@@ -3,15 +3,17 @@
 #include <pcap.h>
 #include <string>
 #include <sstream>
+#include <libconfig.h++>
 
 #include "../include/packet_structs.h"
 
-
+/**
+ * Callback invoked when pcap_loop returns a packet.
+ */
 void received_packet(u_char *args, const struct pcap_pkthdr *hdr, const u_char *packet);
 
-
 int main(int argc, char *argv[]) {
-
+			      
 	// Check that we received the correct number of arguments
 	// Should be [device name] [num packets to collect]
 	if ( argc != 3 ) {
@@ -32,7 +34,7 @@ int main(int argc, char *argv[]) {
 	u_int num_pkts_to_capture;
 	input_str_strm >> num_pkts_to_capture;
 	printf("Reading %d number of packets\n", num_pkts_to_capture);
-	
+
 	char errbuf[PCAP_ERRBUF_SIZE];
 
 	pcap_t *pcap_handle;
