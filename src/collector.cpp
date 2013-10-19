@@ -98,6 +98,7 @@ namespace packet_collector {
 				}
 
 			} else {
+
 				BOOST_LOG_SEV(*logger, ERROR) << "\t! Unable to read 'configVersion' cfg. "
 					<< "Check that is is specified property and matches the collector version";
 				return false;
@@ -137,9 +138,5 @@ namespace packet_collector {
 	}
 }
 
-
-/**
- * Configuration version.  This value must match that in the config file
- */
 const std::string packet_collector::collector::configVersion = "0.1";
 

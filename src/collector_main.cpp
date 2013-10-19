@@ -1,11 +1,17 @@
 #include <libconfig.h++>
 #include <iostream>
 #include <string>
-// #include <boost/log/core.hpp>
-// #include <boost/log/trivial.hpp>
-// #include <boost/log/expressions.hpp>
 
 #include "../include/collector.hpp"
+
+boost_logger initLogger(char* configPath);
+
+/**
+ * Configuration file version that this version of the software supports.  If
+ * there is a mis-match between the value that is specified in the .cpp file
+ * and that in the config file the program will not run.
+ */
+std::string usage = "usage: packet-collector [CONFIG-FILE]";
 
 /**
  * Initialize the logging implementation instance
@@ -37,9 +43,6 @@ boost_logger initLogger(char* configPath) {
 	boost_logger logger;
 	logger.init(logPath);
 
-//	severity_lgr_t* logger = boost_lgr.getLogger();
-//	BOOST_LOG_SEV(*logger, INFO) << "From collector_main";
-// 	BOOST_LOG_SEV(*logger, WARN) << "Warning!";
 	return (logger);							   
 }
 
@@ -48,16 +51,14 @@ int main(int argc, char* argv[]) {
      	// Check that we received the minimum number of arguments
 	// Should be [path-to-config-file [optional: LOGLEVEL]]
 	if ( argc != 2 ) {
-		printf("Missing proper number of arguments\n");
-		//
-		// TODO:	print a usage message
-		//
+		std::cout << "packet-collector: missing path to config file" << std::endl;
+		std::cout << usage << std::endl;
 		return -1;
 	}
 
 	// Path to config file
 	char* configPath = argv[1];
-	printf("Using config file = %s\n", configPath);
+	std::cout << "Using config file: " << configPath << std::endl;
 
 	boost_logger logger = initLogger(configPath);
 	severity_lgr_t* severity_logger = logger.getLogger();

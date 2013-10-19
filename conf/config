@@ -10,7 +10,7 @@ logging = {
 };
 
 memory = {
-	maxSize		= 4096LL;
+	maxSize	= 4096LL;
 	warnSize	= 2048LL;
 };
 

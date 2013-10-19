@@ -37,11 +37,12 @@ namespace packet_collector {
 	public:
 
 		/**
-		 * Configuration file version that this version of the
-		 * software supports.
+		 * Configuration file version that this version of the software
+		 * supports.  If there is a mis-match between the value that is
+		 * specified in the .cpp file and that in the config file the
+		 * program will not run.
 		 */
 		const static std::string configVersion;
-
 
 		/**
 		 * Constructor.
@@ -70,7 +71,7 @@ namespace packet_collector {
 		/**
 		 * Initializes the instance.  Can be invoked multiple times.
 		 * Subsequent calls to init() trigger invocations to shutdown, and
-		 * destruction to all child instances.
+		 * destruction of all child instances.
 		 */
 		void init();
 
