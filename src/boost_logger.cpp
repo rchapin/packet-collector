@@ -34,8 +34,11 @@ namespace attrs = boost::log::attributes;
 #define LOG_OUTPUT_FORMAT \
 	expr::stream \
 		<< expr::format_date_time< boost::posix_time::ptime >("TimeStamp", "%Y-%m-%d %H:%M:%S.%f") \
-		<< ": [" << logging::trivial::severity \
-		<< "] " << expr::smessage
+		<< ": (" << logging::trivial::severity \
+		<< ") " << expr::smessage
+
+
+boost_logger::boost_logger() {}
 
 
 void boost_logger::init(std::string logFilePath) {
@@ -52,19 +55,18 @@ void boost_logger::init(std::string logFilePath) {
 
 	// Create a backend for stdout/console output
 	boost::shared_ptr<sinks::text_ostream_backend> stdout_backend =
-        boost::make_shared< sinks::text_ostream_backend >();
+	        boost::make_shared< sinks::text_ostream_backend >();
 
 	stdout_backend->add_stream(
-        boost::shared_ptr< std::ostream >(&std::clog, logging::empty_deleter())
-	);
+        boost::shared_ptr< std::ostream >(&std::clog, logging::empty_deleter()));
 
 	// Enable auto-flushing after each log record is written
 	stdout_backend->auto_flush(true);
 
 	// Set up a synchronized frontend for the stdout_backend and register it with
 	// the logging core.
-	typedef sinks::synchronous_sink<sinks::text_ostream_backend> sink_sync_txt_ostream_t;
-	boost::shared_ptr<sink_sync_txt_ostream_t> stdout_sink(new sink_sync_txt_ostream_t(stdout_backend));
+	sink_sync_txt_ostream = new sink_sync_txt_ostream_t(stdout_backend);
+	boost::shared_ptr<sink_sync_txt_ostream_t> stdout_sink(sink_sync_txt_ostream);
 
 	stdout_sink->set_formatter(LOG_OUTPUT_FORMAT);
 	this->core->add_sink(stdout_sink);
@@ -87,13 +89,13 @@ void boost_logger::init(std::string logFilePath) {
 
 	// Set up a synchronized frontend for the file_backend and register it with
 	// the logging core.
-	typedef sinks::synchronous_sink<sinks::text_file_backend> sink_synk_txt_file_t;
-	boost::shared_ptr<sink_synk_txt_file_t> file_sink(new sink_synk_txt_file_t(file_backend));
-
+	sink_sync_txt_file = new sink_sync_txt_file_t(file_backend);
+	boost::shared_ptr<sink_sync_txt_file_t> file_sink(sink_sync_txt_file);
+	
 	// file_sink->set_formatter(&my_formatter);
 	file_sink->set_formatter(LOG_OUTPUT_FORMAT);
-
 	this->core->add_sink(file_sink);
+
 
 	boost::log::add_common_attributes();
 
@@ -102,8 +104,8 @@ void boost_logger::init(std::string logFilePath) {
 		logging::trivial::severity >= logging::trivial::info
 	);
 
-	BOOST_LOG_SEV(this->logger, boost::log::trivial::info) << "boost_logger initialized, writing to " << this->logFilePath;
-	// BOOST_LOG_SEV(this->logger, boost_logger::level::INFO) << "boost_logger initialized, writing to " << this->logFilePath;
+	BOOST_LOG_SEV(this->logger, INFO) << CLASS_NAME
+		<< "boost_logger initialized, writing to " << this->logFilePath;
 }
 
 severity_lgr_t* boost_logger::getLogger() {

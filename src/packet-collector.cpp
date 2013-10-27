@@ -4,13 +4,6 @@
 
 #include "../include/collector.hpp"
 
-boost_logger initLogger(char* configPath);
-
-/**
- * Configuration file version that this version of the software supports.  If
- * there is a mis-match between the value that is specified in the .cpp file
- * and that in the config file the program will not run.
- */
 std::string usage = "usage: packet-collector [CONFIG-FILE]";
 
 /**
@@ -55,6 +48,8 @@ int main(int argc, char* argv[]) {
 		std::cout << usage << std::endl;
 		return -1;
 	}
+
+	std::cout << "Starting packet-collector...." << std::endl;
 
 	// Path to config file
 	char* configPath = argv[1];

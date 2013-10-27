@@ -19,17 +19,17 @@ vpath %.hpp $(INC_DIR)
 vpath %.o $(BUILD_DIR)
 
 TARGET	= $(BIN_DIR)/packet-collector
-OBJS	= collector.o collector_main.o boost_logger.o
+OBJS	= collector.o packet-collector.o boost_logger.o
 
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CC) $(LFLAGS) $(LDFLAGS) $(BOOST_LDFLAGS) $^ -o $@
 
-$(BUILD_DIR)/collector.o: collector.cpp collector.hpp boost_logger.hpp
+$(BUILD_DIR)/collector.o: collector.cpp collector.hpp boost_logger.hpp boost_logger.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
-$(BUILD_DIR)/collector_main.o: collector_main.cpp collector.hpp
+$(BUILD_DIR)/packet-collector.o: packet-collector.cpp collector.hpp
 	$(CC) $(CFLAGS) $< -o $@
 
 $(BUILD_DIR)/boost_logger.o: boost_logger.cpp
