@@ -6,11 +6,11 @@
 class pcap {
 
 private:
-	int x, y;
+  int x, y;
 
-	pcap_configs conf;
+  pcap_configs conf;
 
 public:
-	void setValues(int a, int b);
+  void setValues(int a, int b);
 
 };

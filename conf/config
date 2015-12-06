@@ -5,13 +5,13 @@
 configVersion = "0.1";
 
 logging = {
-	level	= "trace";
-	file	= "/var/log/nta/packet-collector.log"
+  level = "trace";
+  file  = "/var/log/nta/packet-collector.log"
 };
 
 memory = {
-	maxSize	= 4096LL;
-	warnSize	= 2048LL;
+  maxSize  = 4096LL;
+  warnSize = 2048LL;
 };
 
 ObjectManager = {
@@ -19,17 +19,17 @@ ObjectManager = {
 };
 
 PacketWriters : (
-	{
-	id 	= "a";
-	class	= "StandardOut";
-	shutdown : { timeout = 5000; };
-	}	
+  {
+  id    = "a";
+  class = "StandardOut";
+  shutdown : { timeout = 5000; };
+  }  
 );
 
 Pcaps : (
-	{
-	id			= "foo";
-	writers			= ( "a" );
-	startOnWriterReady	= true;
-	}
+  {
+  id                  = "foo";
+  writers             = ( "a" );
+  startOnWriterReady  = true;
+  }
 );

@@ -7,82 +7,82 @@
 #ifdef CLASS_NAME
 #undef CLASS_NAME
 #endif
-#define	CLASS_NAME "[collector] "
+#define  CLASS_NAME "[collector] "
 
 namespace packet_collector {
 
-	class collector {
+  class collector {
 
-	private:
-		/**
-		 * Pointer to a boost severity logger
-		 */
-		severity_lgr_t* logger;
+  private:
+    /**
+     * Pointer to a boost severity logger
+     */
+    severity_lgr_t* logger;
 
-		char *configPath;
-		
-		libconfig::Config cfg;
-		/**
-	         * Maximum number of bytes of memory that the program can consume
-		 */
-		unsigned long long int _memMaxSize;
+    char *configPath;
+    
+    libconfig::Config cfg;
+    /**
+           * Maximum number of bytes of memory that the program can consume
+     */
+    unsigned long long int _memMaxSize;
 
-		 /**
-		 * Memory usage threshold, at which, we will start throwing out
-		 * warnings.
-		 */ 
-		unsigned long long int _memWarnSize;
+     /**
+     * Memory usage threshold, at which, we will start throwing out
+     * warnings.
+     */ 
+    unsigned long long int _memWarnSize;
 
-	        /**
-	         * Current number of bytes of memory consumed by the program
-		 */
-		unsigned long long int memCurrSize;
+          /**
+           * Current number of bytes of memory consumed by the program
+     */
+    unsigned long long int memCurrSize;
 
 
-	public:
+  public:
 
-		/**
-		 * Configuration file version that this version of the software
-		 * supports.  If there is a mis-match between the value that is
-		 * specified in the .cpp file and that in the config file the
-		 * program will not run.
-		 */
-		const static std::string configVersion;
+    /**
+     * Configuration file version that this version of the software
+     * supports.  If there is a mis-match between the value that is
+     * specified in the .cpp file and that in the config file the
+     * program will not run.
+     */
+    const static std::string configVersion;
 
-		/**
-		 * Constructor.
-		 * @param[in]	configPath	The path to the configuration file.
-		 */
-		collector(char *configPath, severity_lgr_t* logger);
+    /**
+     * Constructor.
+     * @param[in]  configPath  The path to the configuration file.
+     */
+    collector(char *configPath, severity_lgr_t* logger);
 
-		~collector();
+    ~collector();
 
-		// --------------------------------------------------------------------
-		// Accessor/Mutators:
-		//
+    // --------------------------------------------------------------------
+    // Accessor/Mutators:
+    //
 
-		unsigned long long int getMemMaxSize() const;
+    unsigned long long int getMemMaxSize() const;
 
-		void setMemMaxSize(unsigned long long int memMaxSize);
+    void setMemMaxSize(unsigned long long int memMaxSize);
 
-		unsigned long long int getMemWarnSize() const;
+    unsigned long long int getMemWarnSize() const;
 
-		void setMemWarnSize(unsigned long long int memWarnSize); 
+    void setMemWarnSize(unsigned long long int memWarnSize); 
 
-		// --------------------------------------------------------------------
-		// Member Functions:
-		//
+    // --------------------------------------------------------------------
+    // Member Functions:
+    //
 
-		/**
-		 * Initializes the instance.  Can be invoked multiple times.
-		 * Subsequent calls to init() trigger invocations to shutdown, and
-		 * destruction of all child instances.
-		 */
-		void init();
+    /**
+     * Initializes the instance.  Can be invoked multiple times.
+     * Subsequent calls to init() trigger invocations to shutdown, and
+     * destruction of all child instances.
+     */
+    void init();
 
-		bool loadConfigs();
+    bool loadConfigs();
 
-		void shutdown();
+    void shutdown();
 
-	};
+  };
 }
