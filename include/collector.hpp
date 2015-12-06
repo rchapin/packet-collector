@@ -4,9 +4,9 @@
 
 #include "boost_logger.hpp"
 
-# ifdef CLASS_NAME
-# undef CLASS_NAME
-# endif
+#ifdef CLASS_NAME
+#undef CLASS_NAME
+#endif
 #define	CLASS_NAME "[collector] "
 
 namespace packet_collector {
